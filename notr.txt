@@ -1,0 +1,19 @@
+SCD
+
+pip install pipenv
+
+
+py -m site --user-site
+C:\Users\Acer\AppData\Roaming\Python\Python312\site-packages
+C:\Users\Acer\AppData\Roaming\Python\Python312\site-packages\Scripts
+
+setx PATH "%PATH%";C:\Users\Acer\AppData\Roaming\Python\Python312\site-packages\Scripts"
+
+
+
+windows to git
+ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+ Copy the Public Key:
+The public key is located in ~/.ssh/id_rsa.pub (or the file you specified during key generation) . 
+ Copy the Public Key:
+The public key is located in ~/.ssh/id_rsa.pub (or the file you specified during key generation) . 
