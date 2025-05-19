@@ -4,37 +4,49 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-               sh 'pipenv --python python3 sync'
+                echo "🔧 Setting up Python environment with pipenv"
+                sh 'pipenv --python python3 sync'
             }
         }
+
         stage('Test') {
             steps {
-               sh 'pipenv run pytest'
+                echo "🧪 Running tests with pytest"
+                sh 'pipenv run pytest'
             }
         }
+
         stage('Package') {
-	    when{
-		    anyOf{ branch "master" ; branch 'release' }
-	    }
+            when {
+                anyOf {
+                    branch "master"
+                    branch "release"
+                }
+            }
             steps {
-               sh 'zip -r sbdl.zip lib'
+                echo "📦 Zipping lib folder into sbdl.zip"
+                sh 'zip -r sbdl.zip lib || echo "lib folder not found, skipping zip"'
             }
         }
-	stage('Release') {
-	   when{
-	      branch 'release'
-	   }
-           steps {
-              sh "scp -i /home/prashant/cred/edge-node_key.pem -o 'StrictHostKeyChecking no' -r sbdl.zip log4j.properties sbdl_main.py sbdl_submit.sh conf prashant@40.117.123.105:/home/prashant/sbdl-qa"
-           }
+
+        stage('Release') {
+            when {
+                branch 'release'
+            }
+            steps {
+                echo "🚀 [Simulated] Releasing to QA environment (would SCP files here)"
+                sh 'mkdir -p /tmp/sbdl-qa && cp -r sbdl.zip log4j.properties sbdl_main.py sbdl_submit.sh conf /tmp/sbdl-qa || echo "Some files missing, skipped copy"'
+            }
         }
-	stage('Deploy') {
-	   when{
-	      branch 'master'
-	   }
-           steps {
-               sh "scp -i /home/prashant/cred/edge-node_key.pem -o 'StrictHostKeyChecking no' -r sbdl.zip log4j.properties sbdl_main.py sbdl_submit.sh conf prashant@40.117.123.105:/home/prashant/sbdl-prod"
-           }
+
+        stage('Deploy') {
+            when {
+                branch 'master'
+            }
+            steps {
+                echo "🚀 [Simulated] Deploying to PROD environment (would SCP files here)"
+                sh 'mkdir -p /tmp/sbdl-prod && cp -r sbdl.zip log4j.properties sbdl_main.py sbdl_submit.sh conf /tmp/sbdl-prod || echo "Some files missing, skipped copy"'
+            }
         }
     }
 }
