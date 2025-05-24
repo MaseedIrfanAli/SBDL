@@ -34,7 +34,7 @@ pipeline {
 	      branch 'release'
 	   }
            steps {
-              sh "scp -i /home/Acer/cred/myspark.pem -o 'StrictHostKeyChecking no' -r sbdl.zip log4j.properties sbdl_main.py sbdl_submit.sh conf ubuntu@65.0.176.192:/home/ubuntu/sbdl-qa"
+              sh "scp -i /home/Acer/cred/myspark.pem -o 'StrictHostKeyChecking no' -r sbdl.zip log4j.properties sbdl_main.py sbdl_submit.sh conf ubuntu@13.204.43.138:/home/ubuntu/sbdl-qa"
            }
         }
 	stage('Deploy') {
@@ -42,7 +42,7 @@ pipeline {
 	      branch 'master'
 	   }
            steps {
-               sh "scp -i /home/Acer/cred/myspark.pem -o 'StrictHostKeyChecking no' -r sbdl.zip log4j.properties sbdl_main.py sbdl_submit.sh conf ubuntu@65.0.176.192:/home/ubuntu/sbdl-prod"
+               sh "scp -i /home/Acer/cred/myspark.pem -o 'StrictHostKeyChecking no' -r sbdl.zip log4j.properties sbdl_main.py sbdl_submit.sh conf ubuntu@13.204.43.138:/home/ubuntu/sbdl-prod"
            }
 =======
 
